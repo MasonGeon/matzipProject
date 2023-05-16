@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.study.matzip.mappers.IDataMapper">
+    <select id="selectReviewsByPlaceIndex" resultType="com.study.matzip.vos.data.ReviewVo">
+        SELECT `review`.`index`       AS `index`,
+               `review`.`user_id`     AS userID,
+               `review`.`place_index` AS placeIndex,
+               `review`.`score`       AS score,
+               `review`.`content`     AS content,
+               `user`.`nickname`      AS `userNickname`
+        FROM `matzip_data`.`reviews` AS `review`
+                 LEFT JOIN `matzip_member`.`users` AS `user` ON `review`.user_id = `user`.id
+        WHERE `review`.`place_index` = #{placeIndex}
+        ORDER BY `review`.`index` DESC
+    </select>
+    <select id="selectReviewImagesByReviewIndexExceptData"
+            resultType="com.study.matzip.entities.data.ReviewImageEntity">
+        SELECT `index`        AS `index`,
+               `review_index` AS `reviewIndex`
+        FROM `matzip_data`.`review_images`
+        WHERE `review_index` = #{reviewIndex}
+        ORDER BY `index`
+    </select>
+    <select id="selectReviewImageByIndex" resultType="com.study.matzip.entities.data.ReviewImageEntity">
+        SELECT `index`        AS `index`,
+               `review_index` AS `reviewIndex`,
+               `data`         AS `data`,
+               `type`         AS `type`
+        FROM `matzip_data`.`review_images`
+        WHERE `index` = #{index}
+        LIMIT 1
+    </select>
+    <insert id="insertReview"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.study.matzip.entities.data.ReviewEntity">
+        INSERT INTO `matzip_data`.`reviews` (`user_id`, `place_index`, `score`, `content`)
+        VALUES (#{userId}, #{placeIndex}, #{score}, #{content})
+    </insert>
+    <insert id="insertReviewImage"
+            useGeneratedKeys="true"
+            keyColumn="index"
+            keyProperty="index"
+            parameterType="com.study.matzip.entities.data.ReviewImageEntity">
+        INSERT INTO `matzip_data`.`review_images`(`review_index`, `data`, `type`)
+        VALUES (#{reviewIndex}, #{data}, #{type})
+    </insert>
+    <select id="selectPlacesByIndex"
+            resultType="com.study.matzip.entities.data.PlaceEntity">
+        SELECT `index`             AS `index`,
+               `name`              AS `name`,
+               `image`             AS `image`,
+               `image_type`        AS `imageType`,
+               `address_primary`   AS `addressPrimary`,
+               `address_secondary` AS `addressSecondary`,
+               `contact_first`     AS `contactFirst`,
+               `contact_second`    AS `contactSecond`,
+               `contact_third`     AS `contactThird`,
+               `homepage`          AS `homepage`,
+               `open_from`         AS `openFrom`,
+               `open_to`           AS `openTo`,
+               `break_from`        AS `breakFrom`,
+               `break_to`          AS `breakTo`,
+               `description`       AS `description`,
+               `latitude`          AS `latitude`,
+               `longitude`         AS `longitude`,
+               `category_index`    AS `categoryIndex`,
+               `created_on`        AS `createdOn`,
+               `modified_on`       AS `modifiedON`
+        FROM `matzip_data`.`places`
+        WHERE `index` = #{index}
+        LIMIT 1;
+    </select>
+    <select id="selectPlacesExceptImage"
+            resultType="com.study.matzip.vos.data.PlaceVo">
+        SELECT `place`.`index`             AS `index`,
+               `place`.`name`              AS `name`,
+               `place`.`address_primary`   AS `addressPrimary`,
+               `place`.`address_secondary` AS `addressSecondary`,
+               `place`.`contact_first`     AS `contactFirst`,
+               `place`.`contact_second`    AS `contactSecond`,
+               `place`.`contact_third`     AS `contactThird`,
+               `place`.`homepage`          AS `homepage`,
+               `place`.`open_from`         AS `openFrom`,
+               `place`.`open_to`           AS `openTo`,
+               `place`.`break_from`        AS `breakFrom`,
+               `place`.`break_to`          AS `breakTo`,
+               `place`.`description`       AS `description`,
+               `place`.`latitude`          AS `latitude`,
+               `place`.`longitude`         AS `longitude`,
+               `place`.`category_index`    AS `categoryIndex`,
+               `place`.`created_on`        AS `createdOn`,
+               `place`.`modified_on`       AS `modifiedON`,
+               AVG(`review`.`score`)       AS `score`
+        FROM `matzip_data`.`places` AS `place`
+                 LEFT JOIN matzip_data.reviews AS `review` ON place.`index` = review.place_index
+        WHERE `latitude` BETWEEN #{minLat} AND #{maxLat}
+          AND `longitude` BETWEEN #{minLng} AND #{maxLng}
+        GROUP BY `place`.`index`
+    </select>
+</mapper>

@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/common.css}">
+    <link rel="stylesheet" th:href="@{/resources/stylesheets/index.css}">
+    <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=744f8ca4de04dd4e5a2c1a7d02dc9e6a"></script>
+    <script defer th:src="@{/resources/scripts/index.js}"></script>
+    <script src="https://kit.fontawesome.com/72ab53ee3e.js" crossorigin="anonymous"></script>
+    <title>맛을 담다.</title>
+</head>
+<body>
+<section class="list-container" id="listContainer">
+    <form class="search-form" id="searchForm">
+        <span class="title">Matzip</span>
+        <label class="label">
+            <span hidden>검색어</span>
+            <input autofocus class="input" maxlength="100" name="keyword" placeholder="맛집을 검색해 보세요." type="text">
+        </label>
+        <div class="button-container">
+            <a class="button"
+               href="https://kauth.kakao.com/oauth/authorize?client_id=51a9d274b60c31d66fa34bd02e2488dd
+               &redirect_uri=http://localhost:8080/member/kakao&response_type=code"
+               target="_blank" id="loginButton" th:if="${session.user == null}">로그인</a>
+            <a class="button" id="logoutButton" th:href="@{'./member/logout'}" th:if="${session.user != null}">로그아웃</a>
+            <!--            <a class="button" href="#" id="registerButton">회원가입</a>-->
+        </div>
+    </form>
+    <ul class="list" id="list">
+        <li class="item">
+            <span class="info">
+                <span class="name-container">
+                <span class="name">이름</span>
+                <span class="category">육류</span>
+            </span>
+                <span class="rating-container">
+                    <span class="star-container">
+                        <i class="fa-solid filled star fa-star"></i>
+                        <i class="fa-solid filled star fa-star"></i>
+                        <i class="fa-solid filled star fa-star"></i>
+                        <i class="fa-solid filled star fa-star"></i>
+                        <i class="fa-solid filled fa-star"></i>
+                    </span>
+                    <span class="score">4.1</span>
+                    <span class="count">4건</span>
+                    <span class="review-count">리뷰 13</span>
+                </span>
+            <span class="open-container">
+                <span class="working">영업</span>
+                <span class="hour">00시작</span>
+            </span>
+            <span class="address">우리집</span>
+            <span class="contact">010</span>
+            </span>
+            <img alt="" class="image" src="">
+        </li>
+        <li class="item">
+            <span class="info">
+                <span class="name-container">
+                <span class="name">이름</span>
+                <span class="category">육류</span>
+            </span>
+            <span class="open-container">
+                <span class="working">영업</span>
+                <span class="hour">00시작</span>
+            </span>
+            <span class="address-container">우리집</span>
+            </span>
+            <img alt="" class="image" src="">
+        </li>
+    </ul>
+</section>
+
+<section class="detail-container" id="detailContainer">
+    <div class="title-container">
+        <soan class="title" rel="title"></soan>
+        <a class="close-button" href="#" rel="closeButton">
+            <i class="fa-solid fa-xmark"></i>
+        </a>
+    </div>
+    <div class="image-container" rel="imageContainer">
+        <div class="no-image">
+            <i class="fa-solid fa-circle-exclamation icon"></i>
+            <span class="text">아직 등록된 이미지가 없어요!</span>
+        </div>
+        <img alt=""
+             src="https://w.namu.la/s/366d11cb26abf60d56ad7a5af6761cb14e3469953171377e44a6887a0cb9b9f128e63960ae11b71a30cfef74e3f99bcd9619c0a00e7999085e56026dd5eb779023afb33088a3f563f2823be47cac3564f517b56bacbe72987c0f2d10e2948642ca28bba9bc6562be8b8938f5865a87e9"
+             class="image">
+        <img alt="" src="https://pelicana.co.kr/resources/images/menu/best_menu02_200824.jpg" class="image">
+        <img alt="" src="https://pelicana.co.kr/resources/images/menu/original_menu01_200529.png" class="image">
+        <img alt="" src="https://file.mk.co.kr/meet/neds/2022/10/image_readtop_2022_875926_16648812615186110.jpg"
+             class="image">
+        <img alt="" src="https://recipe1.ezmember.co.kr/cache/recipe/2019/09/10/301536dadeb4d950792026d7e3eafb441.jpg"
+             class="image">
+        <img alt="" src="https://pelicana.co.kr/resources/images/menu/best_menu02_200824.jpg" class="image">
+        <img alt="" src="https://file.mk.co.kr/meet/neds/2022/10/image_readtop_2022_875926_16648812615186110.jpg"
+             class="image">
+        <img alt="" src="https://recipe1.ezmember.co.kr/cache/recipe/2019/09/10/301536dadeb4d950792026d7e3eafb441.jpg"
+             class="image">
+        <img alt="" src="https://file.mk.co.kr/meet/neds/2022/10/image_readtop_2022_875926_16648812615186110.jpg"
+             class="image">
+        <img alt="" src="https://pelicana.co.kr/resources/images/menu/best_menu02_200824.jpg" class="image">
+        <img alt="" src="https://file.mk.co.kr/meet/neds/2022/10/image_readtop_2022_875926_16648812615186110.jpg"
+             class="image">
+        <img alt="" src="https://recipe1.ezmember.co.kr/cache/recipe/2019/09/10/301536dadeb4d950792026d7e3eafb441.jpg"
+             class="image">
+    </div>
+    <div class="rate-container" rel="rateContainer">
+        <span class="title" rel="title">코리아IT아카데미</span>
+        <span class="star-container">
+            <i class="icon fa-solid fa-star"></i>
+            <span class="score" rel="score">4.1</span>
+            <span class="full-score">/5</span>
+        </span>
+        <div class="button-container">
+            <a class="button" href="#" rel="favoriteButton">
+                <i class="icon fa-solid fa-star"></i>
+                <span class="text">즐겨찾기</span>
+            </a>
+        </div>
+    </div>
+    <ul class="info-container" rel="infoContainer">
+        <li class="item">
+            <i class="fa-solid fa-location-dot icon"></i>
+            <span class="text" rel="addressText">대구 광역시 중구 중앙대로 366 10층</span>
+        </li>
+        <li class="item">
+            <i class="fa-solid fa-clock icon"></i>
+            <span class="text" rel="openText">10:30 ~ 11:30</span>
+        </li>
+        <li class="item">
+            <i class="fa-solid fa-phone icon"></i>
+            <span class="text">
+                <a class="link" rel="contactText" href="tel:053-710-5890">053-123-1234</a>
+            </span>
+        </li>
+        <li class="item">
+            <i class="fa-solid fa-house-chimney icon"></i>
+            <span class="text">
+                <a class="link" rel="homepageText" href="#">https://home</a>
+            </span>
+        </li>
+        <li class="item">
+            <i class="fa-solid fa-circle-info icon"></i>
+            <span class="text" rel="descriptionText">어쩌고 저쩌고</span>
+        </li>
+    </ul>
+    <div class="review-unsigned" th:if="${session.user == null}">로그인 후 리뷰를 작성할 수 있어요.</div>
+    <form class="review-form" id="reviewForm" th:if="${session.user != null}">
+        <input type="hidden" name="placeIndex">
+        <input name="score" type="hidden" value="0">
+        <!--accept="image/*"  => 이미지 파일만 받겠다는 뜻-->
+        <input hidden multiple accept="image/*" name="images" type="file">
+        <span class="title">리뷰 작성</span>
+        <div class="score-container">
+            <span class="score" rel="score">-</span>
+            <span class="full-score">/5</span>
+            <div class="star-container" rel="starContainer">
+                <i class="star fa-solid fa-star"></i>
+                <i class="star fa-solid fa-star"></i>
+                <i class="star fa-solid fa-star"></i>
+                <i class="star fa-solid fa-star"></i>
+                <i class="star fa-solid fa-star"></i>
+            </div>
+        </div>
+        <div class="content-container">
+            <label class="label">
+                <span hidden>리뷰 내용</span>
+                <input class="input" maxlength="100" name="content" placeholder="리뷰 작성" type="text">
+            </label>
+            <input class="submit-button" type="submit" value="작성">
+        </div>
+        <div class="image-container" rel="imageContainer">
+            <div class="no-image" rel="noImage">선택된 이미지가 없습니다.</div>
+        </div>
+        <a class="image-select-button" href="#" rel="imageSelectButton">이미지 선택...</a>
+    </form>
+    <ul class="review-container" rel="reviewContainer">
+        <li class="item" rel="item">
+            <span class="nickname" rel="nickname">닉넴</span>
+            <div class="image-container" rel="imageContainer">
+                <img alt="" class="image"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Supreme_pizza.jpg/800px-Supreme_pizza.jpg">
+                <img alt="" class="image" src="https://cdn.dominos.co.kr/admin/upload/goods/20200311_x8StB1t3.jpg">
+                <img alt="" class="image" src="https://i.ytimg.com/vi/X6VrQZhr5hQ/maxresdefault.jpg">
+                <img alt="" class="image" src="https://src.hidoc.co.kr/image/lib/2020/6/17/1592363657269_0.jpg">
+            </div>
+            <span class="content" rel="content">어쩌고</span>
+            <span class="date" rel="date">2022-10-10</span>
+        </li>
+    </ul>
+</section>
+
+<section class="map-container" id="mapContainer">
+    <div class="cover" rel="cover">
+        지도를 불러오고 있습니다...
+    </div>
+</section>
+<div class="login-container" id="loginContainer">
+    <iframe class="login-frame" id="loginFrame"></iframe>
+</div>
+</body>
+</html>
